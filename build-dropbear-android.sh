@@ -56,6 +56,7 @@ echo
 # Apply the compatibility patch
 patch -p1 < ../android-compat.patch
 patch -p1 < ../getpass.patch
+patch -p1 < ../sshpty.c.patch
 cd -
 
 echo "Compiling for ARM"  
