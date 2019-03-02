@@ -149,13 +149,35 @@ diff -ruN dropbear-2018.76/svr-auth.c MOD-dropbear-2018.76/svr-auth.c
  	} else {
  		/* check username hasn't changed */
  		if (strcmp(username, ses.authstate.username) != 0) {
-@@ -323,6 +403,9 @@
- 		usershell = "/bin/sh";
+@@ -320,30 +396,10 @@
+ 	usershell = ses.authstate.pw_shell;
+ 	if (usershell[0] == '\0') {
+ 		/* empty shell in /etc/passwd means /bin/sh according to passwd(5) */
+-		usershell = "/bin/sh";
++		usershell = "/system/bin/sh";
  	}
  
-+	if (svr_opts.android_mode)
-+		goto goodshell;
-+
- 	/* check the shell is valid. If /etc/shells doesn't exist, getusershell()
- 	 * should return some standard shells like "/bin/sh" and "/bin/csh" (this
- 	 * is platform-specific) */
+-	/* check the shell is valid. If /etc/shells doesn't exist, getusershell()
+-	 * should return some standard shells like "/bin/sh" and "/bin/csh" (this
+-	 * is platform-specific) */
+-	setusershell();
+-	while ((listshell = getusershell()) != NULL) {
+-		TRACE(("test shell is '%s'", listshell))
+-		if (strcmp(listshell, usershell) == 0) {
+-			/* have a match */
+-			goto goodshell;
+-		}
+-	}
+-	/* no matching shell */
+-	endusershell();
+-	TRACE(("no matching shell"))
+-	ses.authstate.checkusername_failed = 1;
+-	dropbear_log(LOG_WARNING, "User '%s' has invalid shell, rejected",
+-				ses.authstate.pw_name);
+-	return DROPBEAR_FAILURE;
+-	
+ goodshell:
+-	endusershell();
+ 	TRACE(("matching shell"))
+ 
+ 	TRACE(("uid = %d", ses.authstate.pw_uid))
