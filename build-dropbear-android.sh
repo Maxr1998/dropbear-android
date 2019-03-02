@@ -55,7 +55,8 @@ echo
 # Begin applying changes to make Android compatible
 # Apply the compatibility patch
 patch -p1 < ../android-compat.patch
-patch -p1 < ../getpass.patch
+patch -p1 < ../cli-auth.c.patch
+patch -p1 < ../svr-auth.c.patch
 patch -p1 < ../sshpty.c.patch
 cd -
 
