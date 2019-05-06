@@ -2,5 +2,10 @@
 dropbear-*/
 dropbear-*.tar.bz2
 
+# NDK
+android-ndk-*/
+android-ndk-*.zip
+toolchain/
+
 # Output dir
 target/
