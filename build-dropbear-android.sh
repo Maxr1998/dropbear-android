@@ -24,12 +24,13 @@ else
 fi
 
 ANDROID_NDK=android-ndk-$NDK_REVISION
-if [ ! -f $ANDROID_NDK.zip ]; then
-	wget -O $ANDROID_NDK.zip https://dl.google.com/android/repository/$ANDROID_NDK-linux-x86_64.zip
-fi
-
 if [ ! -d $ANDROID_NDK ]; then
-	unzip $ANDROID_NDK.zip
+	if [ ! -f $ANDROID_NDK.zip ]; then
+		echo "Downloading android-ndk"
+		wget -O $ANDROID_NDK.zip https://dl.google.com/android/repository/$ANDROID_NDK-linux-x86_64.zip
+	fi
+	echo "Unzipping android-ndk"
+	unzip $ANDROID_NDK.zip > /dev/null 2>&1
 fi
 
 if [ $ANDROID_API -eq 16 ]; then
